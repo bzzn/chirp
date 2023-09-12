@@ -48,4 +48,52 @@ public class PackageServiceTests
         
         Assert.Equal(2, all.Count());
     }
+
+    [Fact]
+    public void PackageTooHeavy()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 30 * 1000, 10, 10, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid);
+    }
+
+    [Fact]
+    public void PackageTooLong()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 100, 10, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid);
+    }
+
+    [Fact]
+    public void PackageTooHigh()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 10, 100, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid);
+    }
+
+    [Fact]
+    public void PackageTooWide()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 10, 10, 100);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid);
+    }
 }
