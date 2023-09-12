@@ -1,18 +1,9 @@
 using Domain.Services;
-using Domain.Entites;
 
 namespace DomainTests;
 
 public class PackageServiceTests
 {
-    [Fact]
-    public void AddPackage()
-    {
-        var packageService = new PackageService();
-        var p = packageService.AddPackage("999111111111111111", 20, 10, 10, 10);
-        Assert.True(p.IsValid);
-    }
-
     [Fact]
     public void GetPackage()
     {
@@ -95,5 +86,20 @@ public class PackageServiceTests
         var package = packageService.GetPackage(packageId);
         
         Assert.False(package.IsValid);
+    }
+
+    [Theory]
+    [InlineData("999123", "length (must be 18)")]
+    [InlineData("99912345678901234567890", "length (must be 18)")]
+    [InlineData("999123456789ABCDEF", "format (only numbers allowed)")]
+    [InlineData("666123456789012345", "prefix (must be 999)")]
+    public void PackageIdValidation(string packageId, string failureReason)
+    {
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20000, 10, 10, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid, $"Expected failure due to invalid {failureReason}");
     }
 }

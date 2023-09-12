@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using Domain.Entites;
 
 namespace Domain.Services;
@@ -36,8 +37,19 @@ public class PackageService : IPackageService
 
     public Package GetPackage(string id)
     {
-        var package = storage.Where(p => p.KolliId == id).SingleOrDefault();
-        return package ?? new Package();
+        var package = storage.Where(p => p.KolliId == id).SingleOrDefault() ?? new Package();
+        package.IsValid = true;
+        
+        var validationContext = new ValidationContext(package);
+        var results = new List<ValidationResult>();
+        if (!Validator.TryValidateObject(package, validationContext, results, true))
+        {
+            package.IsValid = false;
+            foreach (var error in results)
+                package.Errors.Append(error.ErrorMessage);
+        }
+
+        return package;
     }
 
     public IEnumerable<Package> GetAllPackages()
