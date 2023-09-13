@@ -9,3 +9,9 @@ public class PackageModel
     public int Width { get; set; }
     public bool IsValid { get; set; }
 }
+
+public class InvalidPackageModel
+{
+    public string KolliId { get; set; } = "";
+    public string Message { get; set; } = "";
+}

@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+
 using Application.Models;
 using Domain.Entites;
 using Domain.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers;
 
@@ -19,6 +20,8 @@ public class PackageController : ControllerBase
     }
 
     [HttpGet("", Name = "GetPackages")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PackageModel>))]
+    [Produces("application/json")]
     public IActionResult GetPackages()
     {
         var packages = packageService.GetAllPackages();
@@ -38,8 +41,24 @@ public class PackageController : ControllerBase
     }
 
     [HttpGet("{id?}", Name = "GetPackage")]
-    public IActionResult GetPackage(string id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PackageModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(InvalidPackageModel))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Produces("application/json")]
+    public IActionResult GetPackage([FromRoute]string id)
     {
+        var correctLength = id.Length == 18;
+        if (!correctLength)
+            return BadRequest(new InvalidPackageModel { Message = $"Incorrect format, must be exactly 18 characters: {id}", KolliId = id });
+
+        var allDigits = id.All(char.IsDigit);
+        if (!allDigits)
+            return BadRequest(new InvalidPackageModel { Message = $"Incorrect format, only digits allowed: {id}", KolliId = id });
+
+        var correctPrefix = id.StartsWith("999");
+        if (!correctPrefix)
+            return BadRequest(new InvalidPackageModel { Message = $"Incorrect format, must start with 999: {id}", KolliId = id });
+
         var package = packageService.GetPackage(id);
 
         if (package.KolliId == string.Empty)
@@ -64,6 +83,10 @@ public class PackageController : ControllerBase
     }
 
     [HttpPost(Name = "PostPackage")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PackageModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public IActionResult PostPackage(PackageModel packageModel)
     {
         var package = new Package
