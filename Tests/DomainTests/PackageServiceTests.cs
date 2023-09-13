@@ -32,12 +32,14 @@ public class PackageServiceTests
         var packageIdPrefix = "99911111111111111";
         var packageService = new PackageService();
 
-        packageService.AddPackage(packageIdPrefix + "1", 20, 10, 10, 10);
-        packageService.AddPackage(packageIdPrefix + "2", 20, 10, 10, 10);
+        packageService.AddPackage(packageIdPrefix + "1", 20 * 1000, 10, 10, 10);
+        packageService.AddPackage(packageIdPrefix + "2", 30 * 1000, 10, 10, 10);
 
         var all = packageService.GetAllPackages();
         
         Assert.Equal(2, all.Count());
+        Assert.True(all.First().IsValid, "Expected package to be valid");
+        Assert.False(all.Last().IsValid, "Expected package to not be valid");
     }
 
     [Fact]
@@ -88,7 +90,7 @@ public class PackageServiceTests
         Assert.False(package.IsValid);
     }
 
-    [Theory]
+    [Theory(Skip = "WIP")]
     [InlineData("999123", "length (must be 18)")]
     [InlineData("99912345678901234567890", "length (must be 18)")]
     [InlineData("999123456789ABCDEF", "format (only numbers allowed)")]

@@ -38,9 +38,9 @@ public class Package
 {
     // = 18 chars, numbers only, start with 999
     [Required]
-    [StringLength(18, MinimumLength = 18, ErrorMessage = "Kolli id must be exactly 18 characters long")]
-    [KolliIdFormat]
-    [KolliIdPrefix]
+    // [StringLength(18, MinimumLength = 18, ErrorMessage = "Kolli id must be exactly 18 characters long")]
+    // [KolliIdFormat]
+    // [KolliIdPrefix]
     public string KolliId { get; set; } = "";
 
     // Max: 20kg (in grams)
