@@ -14,6 +14,7 @@ public class PackageServiceTests
         var actual = packageService.GetPackage(packageId);
         
         Assert.Equal(expected.KolliId, actual.KolliId);
+        Assert.True(actual.IsValid, "Expected package to be valid");
     }
 
     [Fact]

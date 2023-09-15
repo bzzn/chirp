@@ -13,11 +13,16 @@ public interface IPackageService
 
 public class PackageService : IPackageService
 {
-    private List<Package> storage;
+    private readonly IPackageStorage storage;
 
     public PackageService()
     {
-        storage = new List<Package>();
+        this.storage = new VolatilePackageStorage();
+    }
+
+    public PackageService(IPackageStorage storage)
+    {
+        this.storage = storage;
     }
 
     public Package AddPackage(Package package)
@@ -42,13 +47,13 @@ public class PackageService : IPackageService
 
     public Package GetPackage(string id)
     {
-        var package = storage.Where(p => p.KolliId == id).SingleOrDefault() ?? new Package();
+        var package = storage.Get(id);
         return Validate(package);
     }
 
     public IEnumerable<Package> GetAllPackages()
     {
-        return storage.Select(Validate).ToList();
+        return storage.GetAll().Select(Validate).ToList();
     }
 
     private Package Validate(Package package)
