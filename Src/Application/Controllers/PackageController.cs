@@ -62,7 +62,7 @@ public class PackageController : ControllerBase
         var package = packageService.GetPackage(id);
 
         if (package.KolliId == string.Empty)
-            return NotFound(string.Empty);
+            return NotFound(new InvalidPackageModel { Message = $"No such package: {id}", KolliId = id });
 
         logger.LogInformation($"Fetched package: {package.KolliId} (Valid: {package.IsValid})");
         if (!package.IsValid)

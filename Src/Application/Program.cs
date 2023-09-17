@@ -10,18 +10,18 @@ builder.Services.Configure<VolatilePackageStorageOptions>(options => {
     {
         new() {
             KolliId = "999123456789000001",
+            Weight = 20000,
+            Length = 10,
+            Height = 15,
+            Width = 20
+        },
+        new() {
+            KolliId = "999123456789000002",
             Weight = 50000,
             Length = 100,
             Height = 100,
             Width = 100
         },
-        new() {
-            KolliId = "999123456789000002",
-            Weight = 20,
-            Length = 10,
-            Height = 15,
-            Width = 20
-        }
     };
 });
 
