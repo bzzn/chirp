@@ -135,6 +135,14 @@ On success the endpoint returns a status code of `201 Created` and a message:
 ```
 Providing an invalid kolli id will result in a `400 Bad Request` together with a message explaning why it's invalid (same as for when trying to fetch a package).
 
+Attempting to add a package with an existing kolli id will also result in a `400 Bad Request` together with a message:
+```
+{
+  "kolliId": "999123456789012340",
+  "message": "Package already exists, kolli id: 999123456789012340"
+}
+```
+
 ## Preloaded data
 The API has two packages preloaded:
 - 999123456789000001 which has **valid** dimensions and weight.

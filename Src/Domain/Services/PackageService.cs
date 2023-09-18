@@ -33,6 +33,10 @@ public class PackageService : IPackageService
 
     public Package AddPackage(string id, int weight, int length, int height, int width)
     {
+        var existingPackage = storage.Get(id);
+        if (existingPackage.KolliId != string.Empty)
+            return new Package();
+
         var package = new Package
         {
             KolliId = id,

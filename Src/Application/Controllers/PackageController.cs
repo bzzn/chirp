@@ -101,6 +101,16 @@ public class PackageController : ControllerBase
         if (!packageValid)
             return BadRequest(new PackageModelInfo { Message = validationMessage, KolliId = packageModel.KolliId });
 
+        var existingPackage = packageService.GetPackage(packageModel.KolliId);
+        if (existingPackage.KolliId != string.Empty)
+        {
+            return BadRequest(new PackageModelInfo
+            {
+                Message = $"Package already exists, kolli id: {packageModel.KolliId}",
+                KolliId = packageModel.KolliId
+            });
+        }
+
         var package = new Package
         {
             KolliId = packageModel.KolliId,

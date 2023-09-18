@@ -138,4 +138,19 @@ public class PackageServiceTests
         
         Assert.False(package.IsValid, "Expected package to not be valid");
     }
+
+    [Fact]
+    public void PackageAlreadyExists()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+
+        var firstPackage = packageService.AddPackage(packageId, 20 * 1000, 10, 10, 10);
+        var secondPackage = packageService.AddPackage(packageId, 20 * 1000, 15, 15, 15);
+
+        var package = packageService.GetPackage(packageId);
+
+        Assert.Equal(1, packageService.GetAllPackages().Count(p => p.KolliId == packageId));
+        Assert.Equal(firstPackage, package);
+    }
 }
