@@ -90,19 +90,4 @@ public class PackageServiceTests
         
         Assert.False(package.IsValid);
     }
-
-    [Theory(Skip = "WIP")]
-    [InlineData("999123", "length (must be 18)")]
-    [InlineData("99912345678901234567890", "length (must be 18)")]
-    [InlineData("999123456789ABCDEF", "format (only numbers allowed)")]
-    [InlineData("666123456789012345", "prefix (must be 999)")]
-    public void PackageIdValidation(string packageId, string failureReason)
-    {
-        var packageService = new PackageService();
-        packageService.AddPackage(packageId, 20000, 10, 10, 10);
-
-        var package = packageService.GetPackage(packageId);
-        
-        Assert.False(package.IsValid, $"Expected failure due to invalid {failureReason}");
-    }
 }
