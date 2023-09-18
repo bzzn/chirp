@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Application.Models;
 
 public class PackageModel
@@ -10,7 +12,7 @@ public class PackageModel
     public bool IsValid { get; set; }
 }
 
-public class InvalidPackageModel
+public class PackageModelInfo
 {
     public string KolliId { get; set; } = "";
     public string Message { get; set; } = "";

@@ -126,17 +126,14 @@ Content-Type: application/json
   "width": 60
 }
 ```
-On success the endpoint returns a status code of `201 Created` and the package details:
+On success the endpoint returns a status code of `201 Created` and a message:
 ```
 {
     "kolliId": "999123456789012340",
-    "weight": 20000,
-    "length": 60,
-    "height": 60,
-    "width": 60,
-    "isValid": true
+    "message": "Package created with kolli id: 999123456789012340"
 }
 ```
+Providing an invalid kolli id will result in a `400 Bad Request` together with a message explaning why it's invalid (same as for when trying to fetch a package).
 
 ## Preloaded data
 The API has two packages preloaded:
