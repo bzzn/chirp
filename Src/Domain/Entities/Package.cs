@@ -8,19 +8,19 @@ public class Package
     public string KolliId { get; set; } = "";
 
     [Required]
-    [Range(0, 20000, ErrorMessage = "Max weight for a package is 20kg")]
+    [Range(1, 20000, ErrorMessage = "Max weight for a package is 20kg")]
     public int Weight { get; set; }
 
     [Required]
-    [Range(0, 60, ErrorMessage = "Length of package must not exceed 60cm")]
+    [Range(1, 60, ErrorMessage = "Length of package must not exceed 60cm")]
     public int Length { get; set; }
 
     [Required]
-    [Range(0, 60, ErrorMessage = "Height of package must not exceed 60cm")]
+    [Range(1, 60, ErrorMessage = "Height of package must not exceed 60cm")]
     public int Height { get; set; }
 
     [Required]
-    [Range(0, 60, ErrorMessage = "Width of package must not exceed 60cm")]
+    [Range(1, 60, ErrorMessage = "Width of package must not exceed 60cm")]
     public int Width { get; set; }
 
     public IList<string> Errors { get; set; } = new List<string>();

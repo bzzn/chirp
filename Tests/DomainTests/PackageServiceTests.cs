@@ -52,7 +52,19 @@ public class PackageServiceTests
 
         var package = packageService.GetPackage(packageId);
         
-        Assert.False(package.IsValid);
+        Assert.False(package.IsValid, "Expected package to not be valid");
+    }
+
+    [Fact]
+    public void PackageMustWeighSomething()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 0, 10, 10, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid, "Expected package to not be valid");
     }
 
     [Fact]
@@ -64,7 +76,19 @@ public class PackageServiceTests
 
         var package = packageService.GetPackage(packageId);
         
-        Assert.False(package.IsValid);
+        Assert.False(package.IsValid, "Expected package to not be valid");
+    }
+
+    [Fact]
+    public void PackageMustHaveSomeLength()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 0, 10, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid, "Expected package to not be valid");
     }
 
     [Fact]
@@ -76,7 +100,19 @@ public class PackageServiceTests
 
         var package = packageService.GetPackage(packageId);
         
-        Assert.False(package.IsValid);
+        Assert.False(package.IsValid, "Expected package to not be valid");
+    }
+
+    [Fact]
+    public void PackageMustHaveSomeHeight()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 10, 0, 10);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid, "Expected package to not be valid");
     }
 
     [Fact]
@@ -88,6 +124,18 @@ public class PackageServiceTests
 
         var package = packageService.GetPackage(packageId);
         
-        Assert.False(package.IsValid);
+        Assert.False(package.IsValid, "Expected package to not be valid");
+    }
+
+    [Fact]
+    public void PackageMustHaveSomeWidth()
+    {
+        var packageId = "999111111111111111";
+        var packageService = new PackageService();
+        packageService.AddPackage(packageId, 20 * 1000, 10, 10, 0);
+
+        var package = packageService.GetPackage(packageId);
+        
+        Assert.False(package.IsValid, "Expected package to not be valid");
     }
 }
