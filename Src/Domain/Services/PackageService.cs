@@ -6,7 +6,6 @@ namespace Domain.Services;
 public interface IPackageService
 {
     Package AddPackage(string id, int weight, int length, int height, int width);
-    Package AddPackage(Package package);
     Package GetPackage(string id);
     IEnumerable<Package> GetAllPackages();
 }
@@ -23,12 +22,6 @@ public class PackageService : IPackageService
     public PackageService(IPackageStorage storage)
     {
         this.storage = storage;
-    }
-
-    public Package AddPackage(Package package)
-    {
-        storage.Add(package);
-        return package;
     }
 
     public Package AddPackage(string id, int weight, int length, int height, int width)

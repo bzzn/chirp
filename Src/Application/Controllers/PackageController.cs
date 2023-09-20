@@ -111,15 +111,13 @@ public class PackageController : ControllerBase
             });
         }
 
-        var package = new Package
-        {
-            KolliId = packageModel.KolliId,
-            Weight = packageModel.Weight,
-            Length = packageModel.Length,
-            Height = packageModel.Height,
-            Width = packageModel.Width
-        };
-        var result = packageService.AddPackage(package);
+        var result = packageService.AddPackage(
+            packageModel.KolliId,
+            packageModel.Weight,
+            packageModel.Length,
+            packageModel.Height,
+            packageModel.Width
+        );
         logger.LogInformation($"Added package: {result.KolliId}");
 
         return Created($"/package/{result.KolliId}",
